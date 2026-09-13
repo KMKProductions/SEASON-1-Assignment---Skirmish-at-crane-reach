@@ -7,7 +7,7 @@ Read ``environment.md`` beside this file for the rules, helpers, and first impro
 episode state in ``reset``. The constructor takes no arguments.
 """
 
-from sandbox.crane import action, me, tile, visible
+from sandbox.crane import action, me, tile, visible, roster
 from sandbox.observation_types import AxialPosition, SkirmishAction, SkirmishObservation
 
 
@@ -22,6 +22,7 @@ class Agent:
     def act(self, observation: SkirmishObservation) -> SkirmishAction:
         # The enemies this unit can see.
         enemies = visible.enemies(observation)
+        friends = roster.allies(observation)
 
         if not enemies:
             # At the beginning of a default skirmish match, units sit apart and see no enemies.
@@ -46,8 +47,22 @@ class Agent:
 
         # The closest enemy in sight. min returns the enemy dictionary, not the distance.
         nearest = min(enemies, key=lambda enemy: tile.distance(here, enemy["position"]))
-
+        nearest_ally = min(friends, key=lambda ally: tile.distance(here, ally["position"]))
         # The step that gets closest to the enemy, or 0 when no step gets closer.
+        
+
+        enemy_distance = tile.distance(here, nearest["position"])
+
+        if me.unit_type(observation) == "archer" and enemy_distance > 4:
+            return action.stay(nearest["unit_id"], observation)
+
+        
+
+        if me.unit_type(observation) == "archer" and enemy_distance <= 4:
+    
+            ally_step = self._step_toward(observation, nearest_ally["position"])
+            return action.move(ally_step, nearest["unit_id"], observation)
+        
         step = self._step_toward(observation, nearest["position"])
 
         # Naming a target makes the strike prefer that enemy. Any visible enemy can be named,
