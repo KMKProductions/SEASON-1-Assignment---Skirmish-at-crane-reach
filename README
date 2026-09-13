@@ -1,0 +1,16 @@
+DESIGN GOAL:
+
+I wanted each soldier to have a role in the battle that would improve their teamwork. My main focus was making the footman and archer stick together to complement their strengths. 
+I believe that the archer was the most valuable piece, so I focused on giving it a playstyle that kept it alive. I put less focus on the knight because I wanted it to be an annoyance that diverted attention from the knight
+and archer.
+
+REFLECTION:
+
+In my code, I used distance calculations to get the distance between enemies and allies so that my units would make moves based on those distances. At first, I struggled with how to do that as I was trying to directly
+get their distances from the dictionaries but I instead switched to individual calculations by using help from the coding agent.
+
+AI USE:
+
+I used the GitHub Copilot coding agent. When I got stuck trying to get the distances of allies and enemies and make my units move accordingly, I had it help me design code to get my desired results.
+It also helped with modifying their behavior when certain things happened in the game, like when an enemy got too close or when it saw a specific ally. I checked the result by watching the AI play, playing the
+game against my AI to see how it responded to specific scenarios, and by double-checking any generated code.
